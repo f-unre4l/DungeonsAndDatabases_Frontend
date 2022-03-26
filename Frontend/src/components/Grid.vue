@@ -1,49 +1,50 @@
 <script>
 export default {
+  emits: ['heroClickEvent'],
   props: {
     data: Array,
     columns: Array,
-    filterKey: String
+    filterKey: String,
   },
   data() {
     return {
-      sortKey: '',
-      sortOrders: this.columns.reduce((o, key) => ((o[key] = 1), o), {})
-    }
+      sortKey: "",
+      sortOrders: this.columns.reduce((o, key) => ((o[key] = 1), o), {}),
+    };
   },
   computed: {
     filteredData() {
-      const sortKey = this.sortKey
-      const filterKey = this.filterKey && this.filterKey.toLowerCase()
-      const order = this.sortOrders[sortKey] || 1
-      let data = this.data
+      const sortKey = this.sortKey;
+      const filterKey = this.filterKey && this.filterKey.toLowerCase();
+      const order = this.sortOrders[sortKey] || 1;
+      let data = this.data;
       if (filterKey) {
         data = data.filter((row) => {
           return Object.keys(row).some((key) => {
-            return String(row[key]).toLowerCase().indexOf(filterKey) > -1
-          })
-        })
+            return String(row[key]).toLowerCase().indexOf(filterKey) > -1;
+          });
+        });
       }
       if (sortKey) {
         data = data.slice().sort((a, b) => {
-          a = a[sortKey]
-          b = b[sortKey]
-          return (a === b ? 0 : a > b ? 1 : -1) * order
-        })
+          a = a[sortKey];
+          b = b[sortKey];
+          return (a === b ? 0 : a > b ? 1 : -1) * order;
+        });
       }
-      return data
-    }
+      return data;
+    },
   },
   methods: {
     sortBy(key) {
-      this.sortKey = key
-      this.sortOrders[key] = this.sortOrders[key] * -1
+      this.sortKey = key;
+      this.sortOrders[key] = this.sortOrders[key] * -1;
     },
     capitalize(str) {
-      return str.charAt(0).toUpperCase() + str.slice(1)
-    }
-  }
-}
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    },
+  },
+};
 </script>
 
 <template>
@@ -60,7 +61,8 @@ export default {
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(entry,index) in filteredData" :key="index">
+      <tr v-for="(entry,index) in filteredData" :key="index" 
+      @click="$emit('heroClickEvent',filteredData[index].id)">
         <td v-for="(key,index) in columns" :key="index">
           {{entry[key]}}
         </td>
@@ -91,7 +93,7 @@ td {
 th,
 td {
   min-width: 120px;
-  padding: 10px 20px;
+  padding: 2px 4px;
 }
 
 th.active {
