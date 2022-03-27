@@ -28,7 +28,9 @@ export default {
         this.details.hitpoints
       }}
     </p>
-    <img v-bind:src="'data:image/png;base64,' + this.details.avatar" />
+    <img 
+      v-bind:src="'data:image/png;base64,' + this.details.avatar" 
+      object-position: right top; />
     <br>
     <br>
     <table class="table-auto">

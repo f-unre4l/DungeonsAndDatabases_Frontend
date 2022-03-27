@@ -1,7 +1,6 @@
 <script>
 import DemoGrid from "./components/Grid.vue";
 import HeroDetail from "./components/HeroDetail.vue";
-import RequestService from "./services/RequestService.js";
 
 export default {
   components: {
