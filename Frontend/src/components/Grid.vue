@@ -1,6 +1,6 @@
 <script>
 export default {
-  emits: ['heroClickEvent'],
+  emits: ["heroClickEvent"],
   props: {
     data: Array,
     columns: Array,
@@ -51,9 +51,12 @@ export default {
   <table v-if="filteredData.length">
     <thead>
       <tr>
-        <th v-for="(key,index) in columns" :key="index"
+        <th
+          v-for="(key, index) in columns"
+          :key="index"
           @click="sortBy(key)"
-          :class="{ active: sortKey == key }">
+          :class="{ active: sortKey == key }"
+        >
           {{ capitalize(key) }}
           <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
           </span>
@@ -61,10 +64,13 @@ export default {
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(entry,index) in filteredData" :key="index" 
-      @click="$emit('heroClickEvent',filteredData[index].id)">
-        <td v-for="(key,index) in columns" :key="index">
-          {{entry[key]}}
+      <tr
+        v-for="(entry, index) in filteredData"
+        :key="index"
+        @click="$emit('heroClickEvent', filteredData[index].id)"
+      >
+        <td v-for="(key, index) in columns" :key="index">
+          {{ entry[key] }}
         </td>
       </tr>
     </tbody>
@@ -74,7 +80,6 @@ export default {
 
 <style>
 table {
-  border: 2px solid #42b983;
   border-radius: 3px;
   background-color: #fff;
 }
