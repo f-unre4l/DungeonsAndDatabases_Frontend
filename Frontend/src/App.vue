@@ -1,7 +1,7 @@
 <script>
 import DemoGrid from "./components/Grid.vue";
 import HeroDetail from "./components/HeroDetail.vue";
-import RequestService from "./services/RequestService.js"
+import RequestService from "./services/RequestService.js";
 
 export default {
   components: {
@@ -19,13 +19,15 @@ export default {
     this.getHeroList();
   },
   methods: {
-    getHeroList() {
-      this.gridData = RequestService.getHeroes();
+    async getHeroList() {
+      const heroList = "http://localhost:8077/api/v1/gateway/heroes/";
+      this.gridData = await(await fetch(heroList)).json();
     },
-    getHeroDetail(id){
-      this.heroDetail = RequestService.getHeroDetail(id)
-      console.log(this.heroDetail)
-    }
+
+    async getHeroDetail(id) {
+      const heroDetail = "http://localhost:8077/api/v1/gateway/heroes/" + id;
+      this.heroDetail = await (await fetch(heroDetail)).json();
+    },
   },
 };
 </script>
@@ -40,14 +42,13 @@ export default {
         :data="gridData"
         :columns="gridColumns"
         :filter-key="searchQuery"
-        @heroClickEvent="getHeroDetail">
-        {{this.getHeroList()}}
+        @heroClickEvent="getHeroDetail"
+      >
+        {{ this.getHeroList() }}
       </DemoGrid>
     </div>
     <div class="heroDetail">
-      <HeroDetail 
-        :details="heroDetail">
-      </HeroDetail>
+      <HeroDetail :details="heroDetail"> </HeroDetail>
     </div>
   </div>
 </template>
