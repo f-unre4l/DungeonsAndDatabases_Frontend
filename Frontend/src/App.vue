@@ -1,11 +1,13 @@
 <script>
 import DemoGrid from "./components/Grid.vue";
 import HeroDetail from "./components/HeroDetail.vue";
+import Calculator from "./components/Calculator.vue";
 
 export default {
   components: {
     DemoGrid,
     HeroDetail,
+    Calculator,
   },
   data: () => ({
     searchQuery: "",
@@ -14,13 +16,17 @@ export default {
     heroDetail: {},
   }),
   created() {
-    // fetch on init
     this.getHeroList();
   },
   methods: {
     async getHeroList() {
       const heroList = "http://localhost:8077/api/v1/gateway/heroes/";
-      this.gridData = await(await fetch(heroList)).json();
+      this.gridData = await (await fetch(heroList)).json();
+    },
+
+    async getLevel() {
+      const level = "http://localhost:8077/api/v1/gateway/heroes/";
+      //this.gridData = await(await fetch(level)).json();
     },
 
     async getHeroDetail(id) {
@@ -33,18 +39,24 @@ export default {
 
 <template>
   <div class="heroes">
-    <div class="heroList">
-      <form id="search">
-        Search <input name="query" v-model="searchQuery" />
-      </form>
-      <DemoGrid
-        :data="gridData"
-        :columns="gridColumns"
-        :filter-key="searchQuery"
-        @heroClickEvent="getHeroDetail"
-      >
-        {{ this.getHeroList() }}
-      </DemoGrid>
+    <div class="flex-container">
+      <div class="heroList">
+        <form id="search">
+          Search <input name="query" v-model="searchQuery" />
+        </form>
+        <DemoGrid
+          :data="gridData"
+          :columns="gridColumns"
+          :filter-key="searchQuery"
+          @heroClickEvent="getHeroDetail"
+        >
+          {{ this.getHeroList() }}
+        </DemoGrid>
+      </div>
+      <div class="calculator">
+        <Calculator>
+        </Calculator>
+      </div>
     </div>
     <div class="heroDetail">
       <HeroDetail :details="heroDetail"> </HeroDetail>
@@ -75,7 +87,6 @@ body {
 }
 
 .heroList {
-  width: 40%;
   border: none;
   border-right: 1px solid #ccc;
   resize: none;
@@ -84,6 +95,12 @@ body {
   font-size: 14px;
   font-family: "Monaco", courier, monospace;
   padding: 20px;
+}
+
+.flex-container {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
 }
 
 code {

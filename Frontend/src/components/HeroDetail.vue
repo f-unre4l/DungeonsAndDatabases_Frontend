@@ -29,8 +29,7 @@ export default {
       }}
     </p>
     <img 
-      v-bind:src="'data:image/png;base64,' + this.details.avatar" 
-      object-position: right top; />
+      v-bind:src="'data:image/png;base64,' + this.details.avatar"/>
     <br>
     <br>
     <table class="table-auto">
