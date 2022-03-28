@@ -78,16 +78,22 @@ export default {
   <p v-else>No matches found.</p>
 </template>
 
-<style>
+<style scoped>
 table {
+  table-layout: fixed;
+  width: 100%;
   border-radius: 3px;
   background-color: #fff;
 }
 
+th{
+  cursor: pointer;
+}
+</style>
+<style>
 th {
   background-color: #42b983;
   color: rgba(255, 255, 255, 0.66);
-  cursor: pointer;
   user-select: none;
 }
 
@@ -98,6 +104,9 @@ td {
 th,
 td {
   min-width: 120px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
   padding: 2px 4px;
 }
 

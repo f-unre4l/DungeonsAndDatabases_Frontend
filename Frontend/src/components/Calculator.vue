@@ -9,11 +9,14 @@ export default {
   }),
   methods: {
     async getLevel() {
-      const level = "http://localhost:8077/api/v1/gateway/level/" + this.levelQuery;
+      const level =
+        "http://localhost:8077/api/v1/gateway/level/" + this.levelQuery;
       this.levelResult = await (await fetch(level)).text();
     },
     async getStatMod() {
-      const statmod = "http://localhost:8077/api/v1/gateway/statmodifier/" + this.statModQuery;
+      const statmod =
+        "http://localhost:8077/api/v1/gateway/statmodifier/" +
+        this.statModQuery;
       this.statModResult = await (await fetch(statmod)).text();
     },
   },
@@ -21,17 +24,26 @@ export default {
 </script>
 
 <template>
-  <div class="level">
-    <div>Calculate level from experience.</div>
-    <input name="query" placeholder="experience" v-model="levelQuery" />
-    <button @click="getLevel"> Calculate! </button>
-    <div>Level: {{(levelResult<0?"?":levelResult)}}</div>
-  </div>
-  <br>
-  <div class="statmod">
-  <div>Calculate modifier from stat.</div>
-    <input name="query" placeholder="stat" v-model="statModQuery" />
-    <button @click="getStatMod"> Calculate! </button>
-     <div>Modifier: {{(statModResult<-5?"?":statModResult)}}</div>
+  <div class="calculations">
+    <div class="level">
+      <div>Calculate level from experience.</div>
+      <input name="query" placeholder="experience" v-model="levelQuery" />
+      <button @click="getLevel">Calculate!</button>
+      <div>Level: {{ levelResult < 0 ? "?" : levelResult }}</div>
+    </div>
+    <div class="statmod">
+      <div>Calculate modifier from stat.</div>
+      <input name="query" placeholder="stat" v-model="statModQuery" />
+      <button @click="getStatMod">Calculate!</button>
+      <div>Modifier: {{ statModResult < -5 ? "?" : statModResult }}</div>
+    </div>
   </div>
 </template>
+
+<style>
+.calculations{
+display: flex;
+padding: 1em;
+justify-content: space-around;
+}
+</style>

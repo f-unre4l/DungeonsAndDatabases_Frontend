@@ -1,11 +1,11 @@
 <script>
-import DemoGrid from "./components/Grid.vue";
+import HeroGrid from "./components/Grid.vue";
 import HeroDetail from "./components/HeroDetail.vue";
 import Calculator from "./components/Calculator.vue";
 
 export default {
   components: {
-    DemoGrid,
+    HeroGrid,
     HeroDetail,
     Calculator,
   },
@@ -17,6 +17,7 @@ export default {
   }),
   created() {
     this.getHeroList();
+    console.log(this.heroDetail.name)
   },
   methods: {
     async getHeroList() {
@@ -44,22 +45,24 @@ export default {
         <form id="search">
           Search <input name="query" v-model="searchQuery" />
         </form>
-        <DemoGrid
+        <HeroGrid
           :data="gridData"
           :columns="gridColumns"
           :filter-key="searchQuery"
           @heroClickEvent="getHeroDetail"
         >
           {{ this.getHeroList() }}
-        </DemoGrid>
+        </HeroGrid>
       </div>
       <div class="calculator">
-        <Calculator>
-        </Calculator>
+        <Calculator> </Calculator>
       </div>
     </div>
     <div class="heroDetail">
-      <HeroDetail :details="heroDetail"> </HeroDetail>
+      <div class="emptyDetails" v-if="heroDetail.name==undefined">Please select a Hero on the left side</div>
+      <div v-else>
+        <HeroDetail :details="heroDetail"> </HeroDetail>
+      </div>
     </div>
   </div>
 </template>
@@ -67,6 +70,13 @@ export default {
 <style>
 body {
   margin: 0;
+}
+
+.emptyDetails{
+display: flex;
+justify-content: center;
+align-content: center;
+font-size: 200%;
 }
 
 .heroes {
@@ -87,6 +97,7 @@ body {
 }
 
 .heroList {
+  max-width: 100%;
   border: none;
   border-right: 1px solid #ccc;
   resize: none;
